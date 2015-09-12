@@ -2,7 +2,7 @@
 /**
  * Descripcion: Controlador que se encarga de la gestión de las profesiones de la empresa
 */
- Load::models('equipo/equipo');
+ Load::models('equipo/equipo', 'config/equipo_parte');
 
 class EquipoController extends BackendController {
    
@@ -103,13 +103,18 @@ class EquipoController extends BackendController {
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
+        $equipo_parte = new EquipoParte();
+        $maquinaria = $equipo_parte->getInformacionEquipoConPartes($id);
+
         $this->equipos=$equipo->getInformacionEquipo($id);
-        if(Input::hasPost('equipo')) {
-            if(Equipo::setEquipoPartes('create', Input::post('equipo'))) {
-                DwMessage::valid('El Equipo se ha registrado correctamente!');
-                return DwRedirect::toAction('listar');
+        $ids = DwSecurity::getKey($id, 'piece_equipo');
+        if(Input::hasPost('equipo_parte')) {
+            if(EquipoParte::setEquipoParte('create', Input::post('equipo_parte'))) {
+                DwMessage::valid('La Parte se ha registrado correctamente!');
+                return DwRedirect::toAction('agregar_partes/'.$ids);
             }            
-        } 
+        }
+        $this->maquinarias = $maquinaria;
         //cierre del condicional del Input(post)
         $this->page_title = 'Agregar Partes de Maquinaria';
         

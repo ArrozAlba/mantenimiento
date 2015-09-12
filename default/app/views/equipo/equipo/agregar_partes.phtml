@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach($equipos as $equipo): ?>
+        <?php foreach($equipos as $equipo): $id = $equipo->id; ?>
             <tr>
                 <td><?php echo $equipo->codigo; ?></td>
                 <td><?php echo $equipo->activo_fijo; ?></td>
@@ -24,12 +24,50 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <?php if ($maquinarias){ ?>
+    <h5>Piezas/Partes/Componentes</h5>
+    <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+        <thead>
+            <tr>
+                <th class="col-collapse" > CATEGORIA </th>
+                <th class="col-collapse" > PARTE</th>
+                <th class="col-collapse" >CARACTERISTICAS</th>
+                <th class="col-collapse" >CANTIDAD</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($maquinarias as $maquinaria):?>
+            <tr>
+                <td><?php echo $maquinaria->categoria; ?></td>
+                <td><?php echo $maquinaria->parte; ?></td>
+                <td><?php echo $maquinaria->caracteristica; ?></td>
+                <td><?php echo $maquinaria->cantidad; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php } ?>
+    
     <div class="row-fluid">
-            
+        <div class="span3">
+            <?php echo DwForm::dbSelect('equipo_parte.categoria_id', 'nombre', array('config/parte_categoria', 'getListadoCategoria'), NULL, array('class'=>'input-large input-required input-list show-errors'), NULL, 'Categoria'); ?>
+        </div>
+        <div class="span3">
+            <?php echo DwForm::text('equipo_parte.parte', array('class'=>'input-large mask-alphanum  input-required'), NULL, 'Parte'); ?>
+            <?php echo DwForm::hidden('equipo_parte.parte_id', NULL, ''); ?>
+            <?php echo DwForm::hidden('equipo_parte.equipo_id', NULL, $id ); ?>
+        </div>
+        <div class="span3">
+            <?php echo DwForm::text('equipo_parte.caracteristica', array('class'=>'input-large mask-alphanum readonly  input-required'), NULL, 'Caracteristicas'); ?>
+        </div>
+        <div class="span3"> 
+            <?php echo DwForm::text('equipo_parte.cantidad', array('class'=>'input-large mask-num input-required'), NULL, 'Cantidad'); ?>
+        </div>      
     </div>
+
     <div class="row-fluid">
         <div class="form-actions">
-            <?php echo DwButton::save('Guardar Equipo'); ?>
+            <?php echo DwButton::save('Guardar Parte'); ?>
             <?php echo DwButton::reset('form'); ?>
             <?php echo DwButton::cancel(); ?>
         </div>
@@ -49,3 +87,31 @@
     });
 </script>
 <?php echo Tag::js('jquery/jquerymaskplugin.min').PHP_EOL; ?>
+
+<script type="text/javascript" >
+$(document).ready(function(){
+    $('input#equipo_parte_parte').autocomplete({
+            minLength : 2 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+            /*focus: function( event, ui ) {
+                $( "input#equipo_parte_caracteristica" ).val( ui.item.caracteristica );
+                return false;
+            },*/
+            source: function(request, response) {
+                $.ajax({
+                  url: "<?php echo PUBLIC_PATH ?>config/parte/autocomplete",
+                  data: {'busqueda':request.term},
+                  dataType: "json",
+                  type: "POST",
+                  success: function(data){
+                      response(data);
+                  }
+                });
+              },
+              select: function(event, ui) {
+                  $('input#equipo_parte_parte_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#equipo_parte_caracteristica').val(ui.item.caracteristica);// Asignacion de Id en Campo
+                 // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+              }
+    });
+});
+</script>

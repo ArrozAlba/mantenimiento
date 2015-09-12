@@ -10,24 +10,19 @@
 </script>
 
 <div class="container-fluid dw-shell-view">
-
     <?php View::process($page_module, $page_title, $set_title); ?>
-
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
             <?php echo DwHtml::button("equipo/equipo/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
-
     <div class="dw-overflow">
-
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
             <thead>
-                
                 <tr>
                     <th>NUM</th>
                     <th class="col-collapse" data-search="fecha_registro">FECHA REGISTRO </th>
-                    <th class="col-collapse" data-search="fecha_adquisicion">FECHA ADQUISCISION</th>
+                    <th class="col-collapse" data-search="fecha_adquisicion">FECHA COMPRA</th>
                     <th class="col-collapse" data-search="codigo">CODIGO</th>
                     <th class="col-collapse" data-search="nombre">NOMBRE</th>
                     <th class="col-collapse" data-search="fabricante">FABRICANTE</th>
@@ -48,10 +43,10 @@
                         <td><?php echo date("d-m-Y", strtotime($equipo->fecha_compra)); ?></td>
                         <td><?php echo $equipo->codigo; ?></td>
                         <td><?php echo $equipo->nombre; ?></td>
-                        <td><?php echo $equipo->fabricante_id; ?></td>
-                        <td><?php echo $equipo->marca_id; ?></td>
-                        <td><?php echo $equipo->modelo_id; ?></td>
-                        <td><?php echo $equipo->proveedor_id; ?></td>
+                        <td><?php echo $equipo->fabricante; ?></td>
+                        <td><?php echo $equipo->marca; ?></td>
+                        <td><?php echo $equipo->modelo; ?></td>
+                        <td><?php echo $equipo->proveedor; ?></td>
                         <td><?php echo $equipo->estado_solicitud; ?></td>
                         
                         <td>

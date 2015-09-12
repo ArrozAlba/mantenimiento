@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -926,10 +927,10 @@ ALTER SEQUENCE falla_id_seq OWNED BY falla.id;
 
 
 --
--- Name: incidencias; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+-- Name: incidencia; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
-CREATE TABLE incidencias (
+CREATE TABLE incidencia (
     id integer NOT NULL,
     fecha timestamp without time zone,
     departamento_id integer NOT NULL,
@@ -951,7 +952,7 @@ CREATE TABLE incidencias (
 );
 
 
-ALTER TABLE public.incidencias OWNER TO arrozalba;
+ALTER TABLE public.incidencia OWNER TO arrozalba;
 
 --
 -- Name: incidencias_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
@@ -971,7 +972,7 @@ ALTER TABLE public.incidencias_id_seq OWNER TO arrozalba;
 -- Name: incidencias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
-ALTER SEQUENCE incidencias_id_seq OWNED BY incidencias.id;
+ALTER SEQUENCE incidencias_id_seq OWNED BY incidencia.id;
 
 
 --
@@ -2481,7 +2482,7 @@ ALTER TABLE ONLY falla ALTER COLUMN id SET DEFAULT nextval('falla_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY incidencias ALTER COLUMN id SET DEFAULT nextval('incidencias_id_seq'::regclass);
+ALTER TABLE ONLY incidencia ALTER COLUMN id SET DEFAULT nextval('incidencias_id_seq'::regclass);
 
 
 --
@@ -2661,6 +2662,11 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 98	1	2015-09-07 21:20:44.980724-04:30	2015-09-07 21:20:44.980724-04:30	2	\N	\N	\N	\N	127.0.0.1
 99	1	2015-09-07 21:22:25.707007-04:30	2015-09-07 21:22:25.707007-04:30	1	\N	\N	\N	\N	127.0.0.1
 100	1	2015-09-07 23:24:25.799859-04:30	2015-09-07 23:24:25.799859-04:30	1	\N	\N	\N	\N	127.0.0.1
+101	1	2015-09-08 20:17:39.588228-04:30	2015-09-08 20:17:39.588228-04:30	1	\N	\N	\N	\N	127.0.0.1
+102	1	2015-09-08 21:25:48.842096-04:30	2015-09-08 21:25:48.842096-04:30	2	\N	\N	\N	\N	127.0.0.1
+103	1	2015-09-08 21:25:55.295536-04:30	2015-09-08 21:25:55.295536-04:30	1	\N	\N	\N	\N	127.0.0.1
+104	1	2015-09-08 23:17:14.254477-04:30	2015-09-08 23:17:14.254477-04:30	1	\N	\N	\N	\N	127.0.0.1
+105	1	2015-09-09 00:51:07.113573-04:30	2015-09-09 00:51:07.113573-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -2668,7 +2674,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 100, true);
+SELECT pg_catalog.setval('acceso_id_seq', 105, true);
 
 
 --
@@ -3026,10 +3032,10 @@ SELECT pg_catalog.setval('falla_id_seq', 1, false);
 
 
 --
--- Data for Name: incidencias; Type: TABLE DATA; Schema: public; Owner: arrozalba
+-- Data for Name: incidencia; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY incidencias (id, fecha, departamento_id, hora_inicio, hora_fin, turno, falla_id, equipo_id, sector_id, parada_sector, parada_planta, analisis_falla, accion_correctiva, fecha_reparacion, responsable_reparacion, perdida_tn, persistencia_falla, observaciones) FROM stdin;
+COPY incidencia (id, fecha, departamento_id, hora_inicio, hora_fin, turno, falla_id, equipo_id, sector_id, parada_sector, parada_planta, analisis_falla, accion_correctiva, fecha_reparacion, responsable_reparacion, perdida_tn, persistencia_falla, observaciones) FROM stdin;
 \.
 
 
@@ -3076,11 +3082,9 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 12	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	12	Usuarios	sistema/usuario/listar/	902	icon-user	1	1
 10	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	10	Permisos	sistema/privilegio/listar/	905	icon-magic	1	1
 38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	\N	Mantenimientos Preventivos	#	601	icon-magic	1	1
-67	\N	2014-07-30 19:32:00.487102-04:30	2014-07-30 19:32:00.487102-04:30	29	\N	Incidencias	#	261	icon-th	1	1
 3	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Sistema	#	900	icon-cogs	1	1
 14	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	14	Sistema	sistema/configuracion/	911	icon-wrench	1	1
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	#	800	icon-wrench	1	1
-29	\N	2014-03-16 13:23:40.74219-04:30	2014-03-16 13:23:40.74219-04:30	\N	\N	Incidencias	#	200	icon-th	1	1
 36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Mantenimientos	#	600	icon-group	1	1
 37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	\N	Mantenimientos Correctivos	#	602	icon-briefcase	1	1
 5	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	5	Auditorías	sistema/auditoria/	908	icon-eye-open	2	1
@@ -3092,6 +3096,11 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 80	\N	2015-06-20 13:21:14.531687-04:30	2015-06-20 13:21:14.531687-04:30	15	77	Proveedor	config/proveedor/	881	icon-home	1	1
 28	\N	2014-03-16 12:46:04.752491-04:30	2014-03-16 12:46:04.752491-04:30	\N	\N	Fichas de Equipos	#	100	icon-list	1	1
 26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	\N	Fichas de Equipos / equiporias	equipo/equipo/listar	101	icon-list	1	1
+30	\N	2015-09-08 21:53:38.740672-04:30	2015-09-08 21:53:38.740672-04:30	\N	\N	incidencias	incidencias/incidencia/listar	200	icon-group	1	1
+32	\N	2015-09-08 22:05:22.805247-04:30	2015-09-08 22:05:22.805247-04:30	30	\N	Registrar	#	202	\N	1	1
+31	\N	2015-09-08 21:58:45.638091-04:30	2015-09-08 21:58:45.638091-04:30	30	\N	Incidencias	#	200	icon-th	1	1
+86	\N	2015-09-08 22:54:47.734851-04:30	2015-09-08 22:54:47.734851-04:30	15	86	Categorias de Partes	config/parte_categoria/	882	icon-home	1	1
+87	\N	2015-09-08 22:57:11.546879-04:30	2015-09-08 22:57:11.546879-04:30	15	87	Partes de Equipo	config/parte	883	icon-home	1	1
 \.
 
 
@@ -3099,7 +3108,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 80, true);
+SELECT pg_catalog.setval('menu_id_seq', 87, true);
 
 
 --
@@ -5135,6 +5144,8 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 75	\N	2015-06-15 22:51:25.468183-04:30	2015-06-15 22:51:25.468183-04:30	config	marca	*	config/marca/*	Submódulo para la configuración de la información de las marcas	1
 76	\N	2015-06-18 21:44:31.424366-04:30	2015-06-18 21:44:31.424366-04:30	config	sector	*	config/sector/*	Submódulo para la configuración de la información de los sectores	1
 77	\N	2015-06-20 13:20:45.249168-04:30	2015-06-20 13:20:45.249168-04:30	config	proveedor	*	config/proveedor/*	sub-modulo para la gestion de proveedores	1
+86	\N	2015-09-08 23:08:27.515572-04:30	2015-09-08 23:08:27.515572-04:30	config	parte_categoria	*	config/parte_categoria	Sub-modulo para la gestion de categorias de partes	1
+87	\N	2015-09-08 23:09:03.858775-04:30	2015-09-08 23:09:03.858775-04:30	config	parte	*	config/parte	Sub-modulo para la gestion de categoria de parte	1
 \.
 
 
@@ -5142,7 +5153,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 77, true);
+SELECT pg_catalog.setval('recurso_id_seq', 87, true);
 
 
 --
@@ -5157,33 +5168,38 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 278	\N	2014-07-31 14:53:36.88844-04:30	2014-07-31 14:53:36.88844-04:30	2	5
 279	\N	2014-07-31 14:54:17.946247-04:30	2014-07-31 14:54:17.946247-04:30	2	6
 280	\N	2014-07-31 14:54:34.283005-04:30	2014-07-31 14:54:34.283005-04:30	2	7
-1066	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	1	2
-1067	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	15	2
-1068	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	15	5
-1069	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	16	2
-1070	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	16	5
-1071	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	21	2
-1072	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	21	5
-1073	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	8	2
-1074	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	9	2
-1075	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	10	2
-1076	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	11	2
-1077	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	12	2
-1078	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	13	2
-1079	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	14	2
 1080	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	69	8
-1081	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	2
-1082	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	5
 1083	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	6
-1084	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	3
 1085	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	8
 1086	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	4
 1087	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	3	7
-1088	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	4	2
-1089	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	5	2
-1090	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	6	2
-1091	\N	2015-06-02 16:03:19.173355-04:30	2015-06-02 16:03:19.173355-04:30	7	2
 1092	\N	2015-06-04 15:24:37.969511-04:30	2015-06-04 15:24:37.969511-04:30	2	8
+1144	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	1	2
+1145	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	16	2
+1146	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	16	5
+1147	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	15	2
+1148	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	15	5
+1149	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	77	2
+1150	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	76	2
+1151	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	75	2
+1152	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	74	2
+1153	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	73	2
+1154	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	21	2
+1155	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	21	5
+1156	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	13	2
+1157	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	14	2
+1158	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	11	2
+1159	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	10	2
+1160	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	9	2
+1161	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	8	2
+1162	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	7	2
+1163	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	6	2
+1164	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	5	2
+1165	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	4	2
+1166	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	12	2
+1167	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	3	2
+1168	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	3	5
+1169	\N	2015-09-08 21:50:52.683887-04:30	2015-09-08 21:50:52.683887-04:30	3	3
 \.
 
 
@@ -5191,7 +5207,7 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_perfil_id_seq', 1092, true);
+SELECT pg_catalog.setval('recurso_perfil_id_seq', 1169, true);
 
 
 --
@@ -5428,7 +5444,7 @@ ALTER TABLE ONLY falla
 -- Name: incidencias_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
-ALTER TABLE ONLY incidencias
+ALTER TABLE ONLY incidencia
     ADD CONSTRAINT incidencias_pkey PRIMARY KEY (id);
 
 
@@ -5730,7 +5746,7 @@ ALTER TABLE ONLY estado_usuario
 -- Name: incidencia_departamento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY incidencias
+ALTER TABLE ONLY incidencia
     ADD CONSTRAINT incidencia_departamento_fkey FOREIGN KEY (departamento_id) REFERENCES departamento(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
@@ -5738,7 +5754,7 @@ ALTER TABLE ONLY incidencias
 -- Name: incidencia_equipo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY incidencias
+ALTER TABLE ONLY incidencia
     ADD CONSTRAINT incidencia_equipo_fkey FOREIGN KEY (equipo_id) REFERENCES equipo(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
@@ -5746,7 +5762,7 @@ ALTER TABLE ONLY incidencias
 -- Name: incidencia_falla_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY incidencias
+ALTER TABLE ONLY incidencia
     ADD CONSTRAINT incidencia_falla_fkey FOREIGN KEY (falla_id) REFERENCES falla(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
@@ -5754,7 +5770,7 @@ ALTER TABLE ONLY incidencias
 -- Name: incidencia_sector_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY incidencias
+ALTER TABLE ONLY incidencia
     ADD CONSTRAINT incidencia_sector_fkey FOREIGN KEY (sector_id) REFERENCES sector(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 

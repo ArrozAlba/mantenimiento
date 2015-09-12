@@ -1,0 +1,57 @@
+<?php View::notify(); ?>
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            form_search: true,
+            form_action: '<?php echo PUBLIC_PATH; ?>config/parte/buscar/',
+            form_load_data : 'dw-shell-content',
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"config/parte/listar/"
+        });
+    });
+</script>
+<div class="container-fluid dw-shell-view">
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("config/parte/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow" id="data-result" >
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="observacion">CARACTERISTICAS</th>
+                    <th class="col-collapse" data-search="observacion">OBSERVACION</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($partes->items as $parte): ?>
+                    <?php $key_upd = DwSecurity::getKey($parte->id, 'upd_parte'); ?>
+                    <?php $key_del = DwSecurity::getKey($parte->id, 'del_parte'); ?>
+                    <tr>
+                        <td><?php echo $partes->counter; ?></td>
+                        <td><?php echo $parte->nombre; ?></td>
+                        <td><?php echo $parte->caracteristica; ?></td>
+                        <td><?php echo $parte->observacion; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Fabricante', "config/parte/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Fabricante', "config/parte/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar parte', 'confirm-body'=>'Está seguro de eliminar este parte? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $partes->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$partes, 'url'=>"config/parte/listar/$order/")); ?>
+
+</div>

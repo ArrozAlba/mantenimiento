@@ -24,16 +24,19 @@ class Equipo extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoEquipo($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'equipo.*';
-        $join = '';        
+        $columns = 'equipo.*, fabricante.nombre fabricante, modelo.nombre modelo, marca.nombre marca , proveedor.nombre proveedor ';
+        $join = ' INNER JOIN fabricante ON equipo.fabricante_id = fabricante.id ';        
+        $join .= ' INNER JOIN proveedor ON equipo.proveedor_id = proveedor.id';        
+        $join .= ' INNER JOIN modelo ON equipo.modelo_id = modelo.id';        
+        $join .= ' INNER JOIN marca ON modelo.marca_id = marca.id';        
         $conditions = "";
         $order = $this->get_order($order, 'equipo', array('equipo'=>array('ASC'=>'equipo.descripcion ASC, equipo.tipo_equipo ASC',
                                                                               'DESC'=>'equipo.descripcion DESC, equipo.tipo_equipo ASC',
                                                                               )));
         if($page) {                
-            return $this->paginated("columns: $columns", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "order: $order", "join: $join","page: $page");
         } else {
-            return $this->find("columns: $columns", "order: $order", "page: $page");            
+            return $this->find("columns: $columns", "order: $order", "join: $join" ,"page: $page");            
         }
     }
     

@@ -6,7 +6,7 @@
             form_action: '<?php echo PUBLIC_PATH; ?>config/categoria/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"config/categoria/listar/"
+            order_action: $.KumbiaPHP.publicPath+"config/parte_categoria/listar/"
         });
     });
 </script>
@@ -15,7 +15,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("config/categoria/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("config/parte_categoria/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -39,8 +39,8 @@
                         <td><?php echo $categoria->nombre; ?></td>
                         <td><?php echo $categoria->observacion; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar categoria', "config/categoria/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar categoria', "config/categoria/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar categoria', 'confirm-body'=>'Está seguro de eliminar este categoria? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar categoria', "config/parte_categoria/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar categoria', "config/parte_categoria/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar categoria', 'confirm-body'=>'Está seguro de eliminar este categoria? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
                     </tr>
                     <?php $categorias->counter++; ?>
@@ -50,6 +50,6 @@
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$categorias, 'url'=>"config/categoria/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$categorias, 'url'=>"config/parte_categoria/listar/$order/")); ?>
 
 </div>

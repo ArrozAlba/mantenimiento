@@ -1,0 +1,68 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"incidencias/incidencia/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("incidencias/incidencia/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="fecha">FECHA</th>
+                    <th class="col-collapse" data-search="hora_inicio">HORA INICIO</th>
+                    <th class="col-collapse" data-search="sector">SECTOR</th>
+                    <th class="col-collapse" data-search="equipo">EQUIPO</th>
+                    <th class="col-collapse" data-search="falla">FALLA</th>
+                    <th class="col-collapse" data-search="parada_sector">PARADA SECTOR</th>
+                    <th class="col-collapse" data-search="parada_planta">PARADA PLANTA</th>
+                    <th class="col-collapse" data-search="responsable">RESPONSABLE</th>
+                    <th class="col-collapse" data-search="estado">ESTADO</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($incidencias->items as $incidencia): ?>
+                    <?php $key_upd = DwSecurity::getKey($incidencia->id, 'upd_incidencia'); ?>
+                    <?php $key_del = DwSecurity::getKey($incidencia->id, 'del_incidencia'); ?>
+                    <tr>
+                        <td><?php echo $incidencias->counter; ?></td>
+                        <td><?php echo $incidencia->fecha_solicitud; ?></td>
+                        <td><?php echo $incidencia->titular_id; ?></td>
+                        <td><?php echo $incidencia->beneficiario_id; ?></td>
+                        <td><?php echo $incidencia->proveedor_id; ?></td>
+                        <td><?php echo $incidencia->servicio_id; ?></td>
+                        <td><?php echo $incidencia->patologia_id; ?></td>
+                        <td><?php echo $incidencia->observacion; ?></td>
+                        <td><?php echo $incidencia->estado_solicitud; ?></td>
+                        
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Solicitud', "incidencia/incidencia/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "incidencia/incidencia/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $incidencias->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$incidencias, 'url'=>"incidencias/incidencia/listar/$order/")); ?>
+</div>
